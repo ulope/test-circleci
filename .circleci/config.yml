@@ -24,7 +24,12 @@ jobs:
           command: tree; ls -la . t
       - run:
           command: echo y > y; ls -la .
-
+  build:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - run:
+          command: echo bla
 
 workflows:
   version: 2
