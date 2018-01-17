@@ -37,4 +37,5 @@ workflows:
     jobs:
       - s1
       - s2:
-          requires: s1
+          requires: 
+            - s1
