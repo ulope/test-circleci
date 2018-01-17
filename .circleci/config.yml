@@ -3,14 +3,14 @@ jobs:
     docker:
       - image: circleci/python:3.6
     steps:
-      run:
-        command: |
-          mkdir t
-          echo x > t/x
-      persist_to_workspace:
-        root: "."
-        paths:
-          - t
+      - run:
+          command: |
+            mkdir t
+            echo x > t/x
+      - persist_to_workspace:
+          root: "."
+          paths:
+            - t
 
   s2:
     docker:
@@ -22,3 +22,11 @@ jobs:
           command: tree; ls -la . t
       - run:
           command: echo y > y; ls -la .
+
+workflows:
+  version: 2
+  bla:
+    jobs:
+      - s1
+      - s2:
+          requires: s1
