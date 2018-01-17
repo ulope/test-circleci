@@ -21,7 +21,7 @@ jobs:
       - attach_workspace:
           at: "."
       - run:
-          command: tree; ls -la . t
+          command: ls -la . t
       - run:
           command: echo y > y; ls -la .
   build:
