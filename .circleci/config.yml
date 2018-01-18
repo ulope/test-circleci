@@ -10,6 +10,8 @@ tpl: &tpl
           echo done 
 
 jobs:
+  prepare:
+    <<: *tpl
   prepare-a:
     <<: *tpl
   prepare-b:
@@ -22,10 +24,6 @@ jobs:
     <<: *tpl
   test-b-2:
     <<: *tpl
-  test-a-3:
-    <<: *tpl
-  test-b-3:
-    <<: *tpl
   finalize:
     <<: *tpl
 
@@ -33,8 +31,13 @@ workflows:
   version: 2
   bla:
     jobs:
-      - prepare-a
-      - prepare-b
+      - prepare
+      - prepare-a:
+          requires:
+            - prepare
+      - prepare-b:
+          requires:
+            - prepare
       - test-a-1:
           requires: 
             - prepare-a
@@ -47,17 +50,9 @@ workflows:
       - test-b-2:
           requires: 
             - prepare-b
-      - test-a-3:
-          requires: 
-            - prepare-a
-      - test-b-3:
-          requires: 
-            - prepare-b
       - finalize:
           requires:
             - test-a-1
             - test-a-2
             - test-a-3
             - test-b-1
-            - test-b-2
-            - test-b-3
