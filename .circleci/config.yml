@@ -53,6 +53,6 @@ workflows:
       - finalize:
           requires:
             - test-a-1
-            - test-a-2
-            - test-a-3
             - test-b-1
+            - test-a-2
+            - test-b-2
