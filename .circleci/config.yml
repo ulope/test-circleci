@@ -6,7 +6,7 @@ tpl: &tpl
   steps:
     - run:
         command: |
-          sleep 10
+          sleep 5
           echo done 
 
 jobs:
