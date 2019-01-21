@@ -1,9 +1,15 @@
-version: 2
+version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: circleci/python:3.6
+
 
 jobs:
   pre:
-    docker:
-      - image: circleci/python:3.6
+    executor:
+      name: default
     steps:
       - run:
           command: |
@@ -14,8 +20,8 @@ jobs:
           paths:
             - bla
   test:
-    docker:
-      - image: circleci/python:3.6
+    executor:
+      name: default
     steps:
       - attach_workspace:
         at: ~
@@ -30,8 +36,8 @@ jobs:
             - bla
 
   finalize:
-    docker:
-      - image: circleci/python:3.6
+    executor:
+      name: default
     steps:
       - attach_workspace:
         at: ~
