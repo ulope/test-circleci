@@ -19,12 +19,12 @@ jobs:
           root: "~"
           paths:
             - bla
-  test:
+  doit:
     executor:
       name: default
     steps:
       - attach_workspace:
-        at: ~
+          at: "~"
       - run:
           command: |
             mkdir bla
@@ -40,7 +40,7 @@ jobs:
       name: default
     steps:
       - attach_workspace:
-        at: ~
+          at: "~"
       - run:
           command: |
             ls -la bla
@@ -49,15 +49,15 @@ workflows:
   bla:
     jobs:
       - pre
-      - test:
-          name: test-a
+      - doit:
+          name: doit-a
           requires:
             - pre
-      - test:
-          name: test-b
+      - doit:
+          name: doit-b
           requires:
             - pre
       - finalize:
           requires:
-            - test-a
-            - test-b
+            - doit-a
+            - doit-b
