@@ -13,8 +13,8 @@ jobs:
     steps:
       - run:
           command: |
-            mkdir bla
-            echo pre > ${CIRCLE_JOB}.txt
+            mkdir -p bla
+            echo pre > bla/${CIRCLE_JOB}.txt
       - persist_to_workspace:
           root: "~"
           paths:
@@ -27,8 +27,8 @@ jobs:
           at: "~"
       - run:
           command: |
-            mkdir bla
-            echo pre > ${CIRCLE_JOB}.txt
+            mkdir -p bla
+            echo pre > bla/${CIRCLE_JOB}.txt
             ls -la bla
       - persist_to_workspace:
           root: "~"
