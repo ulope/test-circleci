@@ -46,6 +46,7 @@ jobs:
             ls -la bla
 
 workflows:
+  version: 2
   bla:
     jobs:
       - pre
