@@ -13,6 +13,7 @@ jobs:
     steps:
       - run:
           command: |
+            pwd
             mkdir -p bla
             echo pre > bla/${CIRCLE_JOB}.txt
       - persist_to_workspace:
