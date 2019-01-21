@@ -1,58 +1,58 @@
 version: 2
 
-tpl: &tpl
-  docker:
-    - image: circleci/python:3.6
-  steps:
-    - run:
-        command: |
-          sleep 5
-          echo done 
-
 jobs:
-  prepare:
-    <<: *tpl
-  prepare-a:
-    <<: *tpl
-  prepare-b:
-    <<: *tpl
-  test-a-1:
-    <<: *tpl
-  test-b-1:
-    <<: *tpl
-  test-a-2:
-    <<: *tpl
-  test-b-2:
-    <<: *tpl
+  pre:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - run:
+          command: |
+            mkdir bla
+            echo pre > ${CIRCLE_JOB}.txt
+      - persist_to_workspace:
+          root: "~"
+          paths:
+            - bla
+  test:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - attach_workspace:
+        at: ~
+      - run:
+          command: |
+            mkdir bla
+            echo pre > ${CIRCLE_JOB}.txt
+            ls -la bla
+      - persist_to_workspace:
+          root: "~"
+          paths:
+            - bla
+
   finalize:
-    <<: *tpl
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - attach_workspace:
+        at: ~
+      - run:
+          command: |
+            ls -la bla
 
 workflows:
   version: 2
   bla:
     jobs:
-      - prepare
-      - prepare-a:
+      - pre
+      - test:
+          name: test-a
           requires:
-            - prepare
-      - prepare-b:
+            - pre
+      - test:
+          name: test-b
           requires:
-            - prepare
-      - test-a-1:
-          requires: 
-            - prepare-a
-      - test-b-1:
-          requires: 
-            - prepare-b
-      - test-a-2:
-          requires: 
-            - prepare-a
-      - test-b-2:
-          requires: 
-            - prepare-b
+            - pre
       - finalize:
           requires:
-            - test-a-1
-            - test-b-1
-            - test-a-2
-            - test-b-2
+            - test-a
+            - test-b
