@@ -19,7 +19,7 @@ jobs:
       - persist_to_workspace:
           root: "~"
           paths:
-            - bla
+            - project/bla
   doit:
     executor:
       name: default
@@ -34,7 +34,7 @@ jobs:
       - persist_to_workspace:
           root: "~"
           paths:
-            - bla
+            - project/bla
 
   finalize:
     executor:
