@@ -48,7 +48,7 @@ jobs:
             ls -la bla
 
 workflows:
-  bla:
+  wf1:
     jobs:
       - pre
       - doit:
@@ -63,3 +63,9 @@ workflows:
           requires:
             - doit-a
             - doit-b
+  wf2:
+    jobs:
+      - pre
+      - doit:
+          requires: 
+            - pre
