@@ -38,7 +38,8 @@ jobs:
       name: docker
       py-version: << parameters.py-version >>
     steps:
-      - custom-command
+      - custom-command:
+        py-version: << parameters.py-version >>
 
 workflows:
   wf1:
