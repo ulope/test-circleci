@@ -39,7 +39,7 @@ jobs:
       py-version: << parameters.py-version >>
     steps:
       - custom-command:
-        py-version: << parameters.py-version >>
+          py-version: << parameters.py-version >>
 
 workflows:
   wf1:
