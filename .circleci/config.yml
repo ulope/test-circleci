@@ -9,16 +9,8 @@ executors:
     docker:
       - image: circleci/python:<< parameters.py-version >>
 
-
-jobs:
-  job-1:
-    parameters:
-      py-version:
-        default: "3.7"
-        type: string    
-    executor:
-      name: docker
-      py-version: << parameters.py-version >>
+commands:
+  custom-command:
     steps:
       - restore_cache:
           key: cache-<< parameters.py-version >>
@@ -30,6 +22,19 @@ jobs:
           key: cache-<< parameters.py-version >>
           paths:
             - "~/test"
+
+
+jobs:
+  job-1:
+    parameters:
+      py-version:
+        default: "3.7"
+        type: string    
+    executor:
+      name: docker
+      py-version: << parameters.py-version >>
+    steps:
+      - custom-command
 
 workflows:
   wf1:
