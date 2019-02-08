@@ -27,9 +27,9 @@ jobs:
             mkdir -p test
             [[ ! -f test/bla ]] && echo bla > test/bla || true
       - save_cache:
-        key: cache-<< parameters.py-version >>
-        paths:
-          - "~/test"
+          key: cache-<< parameters.py-version >>
+          paths:
+            - "~/test"
 
 workflows:
   wf1:
