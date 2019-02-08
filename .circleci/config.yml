@@ -11,6 +11,10 @@ executors:
 
 commands:
   custom-command:
+    parameters:
+      py-version:
+        default: "3.7"
+        type: string    
     steps:
       - restore_cache:
           key: cache-<< parameters.py-version >>
