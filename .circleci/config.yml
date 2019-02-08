@@ -34,9 +34,9 @@ jobs:
 workflows:
   wf1:
     jobs:
-      job-1:
-        name: job-1-3.6
-        py-version: "3.6"
-      job-1:
-        name: job-1-3.7
-        py-version: "3.7"
+      - job-1:
+          name: job-1-3.6
+          py-version: "3.6"
+      - job-1:
+          name: job-1-3.7
+          py-version: "3.7"
