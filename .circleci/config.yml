@@ -1,71 +1,42 @@
 version: 2.1
 
 executors:
-  default:
+  docker:
+    parameters:
+      py-version:
+        default: "3.7"
+        type: string
     docker:
-      - image: circleci/python:3.6
+      - image: circleci/python:<< parameters.py-version >>
 
 
 jobs:
-  pre:
+  job-1:
+    parameters:
+      py-version:
+        default: "3.7"
+        type: string    
     executor:
-      name: default
+      name: docker
+      py-version: << parameters.py-version >>
     steps:
+      - restore_cache:
+          key: cache-<< parameters.py-version >>
       - run:
           command: |
-            pwd
-            mkdir -p bla
-            echo pre > bla/${CIRCLE_JOB}.txt
-      - persist_to_workspace:
-          root: "~"
-          paths:
-            - project/bla
-  doit:
-    executor:
-      name: default
-    steps:
-      - attach_workspace:
-          at: "~"
-      - run:
-          command: |
-            mkdir -p bla
-            rm -rf bla/*
-            echo pre > bla/${CIRCLE_JOB}.txt
-            ls -la bla
-      - persist_to_workspace:
-          root: "~"
-          paths:
-            - project/bla
-
-  finalize:
-    executor:
-      name: default
-    steps:
-      - attach_workspace:
-          at: "~"
-      - run:
-          command: |
-            ls -la bla
+            mkdir -p test
+            [[ ! -f test/bla ]] && echo bla > test/bla || true
+      - save_cache:
+        key: cache-<< parameters.py-version >>
+        paths:
+          - "~/test"
 
 workflows:
   wf1:
     jobs:
-      - pre
-      - doit:
-          name: doit-a
-          requires:
-            - pre
-      - doit:
-          name: doit-b
-          requires:
-            - pre
-      - finalize:
-          requires:
-            - doit-a
-            - doit-b
-  wf2:
-    jobs:
-      - pre
-      - doit:
-          requires: 
-            - pre
+      job-1:
+        name: job-1-3.6
+        py-version: "3.6"
+      job-1:
+        name: job-1-3.7
+        py-version: "3.7"
